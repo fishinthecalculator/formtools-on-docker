@@ -27,8 +27,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_PASSWORD=mysql
-      - MYSQL_DATABASE=easyforms
-      - MYSQL_USER=easyforms
+      - MYSQL_DATABASE=formtools
+      - MYSQL_USER=formtools
     restart: unless-stopped
 
 networks:
