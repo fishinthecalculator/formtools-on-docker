@@ -2,20 +2,23 @@ version: '3.8'
 
 services:
   formtools:
-    image: php:7.3-fpm
-    container_name: formtools
+    image: php:7.4-fpm
+    container_name: formtools-docker
+    tty: true
     networks:
+      - web
       - formtools_network
     expose:
       - 9000
     volumes:
-      - ./formtools:/var/www/html:rw
+      - ./formtools:/app
+    working_dir: /app
     depends_on:
       - db
     restart: unless-stopped
 
   db:
-    image: mariadb:10.5
+    image: mariadb
     container_name: db
     networks:
       - formtools_network
@@ -27,6 +30,9 @@ services:
     restart: unless-stopped
 
 networks:
+  web:
+    name: web
+    external: true
   formtools_network:
   
 volumes:
