@@ -2,18 +2,17 @@ version: '3.8'
 
 services:
   formtools:
-    build: .
+    image: php:7.3-fpm
     container_name: formtools
     networks:
       - formtools_network
-    ports:
-      - 8080:80
+    expose:
+      - 9000
     volumes:
       - ./formtools:/var/www/html:rw
     depends_on:
       - db
     restart: unless-stopped
-  
 
   db:
     image: mariadb:10.5
@@ -23,11 +22,8 @@ services:
     volumes:
       - formtools_db:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
-    environment:
-      - MYSQL_ROOT_PASSWORD=toor
-      - MYSQL_PASSWORD=mysql
-      - MYSQL_DATABASE=formtools
-      - MYSQL_USER=formtools
+    env_file:
+      - .env
     restart: unless-stopped
 
 networks:
@@ -35,3 +31,5 @@ networks:
   
 volumes:
   formtools_db:
+  formtools_upload:
+  formtools_cache:
