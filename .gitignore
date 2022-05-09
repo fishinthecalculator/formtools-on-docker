@@ -6,3 +6,5 @@ tmp/
 
 formtools
 uploads
+data
+smtp-auth

@@ -3,20 +3,21 @@ version: "3.7"
 services:
   formtools:
     container_name: formtools
-    #image: php:7.4-fpm
     build: .
     image: php:7.4-fpm-pdo_mysql
     restart: always
     tty: true # Enables debugging capabilities when attached to this container.
     volumes:
       - ./formtools:/app
+      - ./smtp-auth:/etc/mail/authinfo/smtp-auth
+      - ./sendmail.mc:/etc/mail/sendmail.mc:ro
       # Remember to `chmod 777 data/{uploads,cache}`
       - ./data/uploads:/app/upload:rw
       - ./data/cache:/app/cache:rw
     working_dir: /app
-    networks:
-      - web
-      - formtools
+    # networks:
+    #   - web
+    #   - formtools
 
   db:
     container_name: formtools_db
@@ -25,11 +26,11 @@ services:
     volumes:
       - ./data/db:/var/lib/mysql
     env_file: .env
-    networks:
-      - formtools
+    # networks:
+    #   - formtools
 
-networks:
-  formtools:
-  web:
-    name: web
-    external: true
+# networks:
+  # formtools:
+  # web:
+  #   name: web
+  #   external: true
